@@ -24,4 +24,6 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/sneakertail/frontend:dev-${{ github.sha }}
+          tags: |
+            ghcr.io/sneakertail/frontend:dev
+            ghcr.io/sneakertail/frontend:dev-${{ github.sha }}

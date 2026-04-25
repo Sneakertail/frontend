@@ -16,9 +16,9 @@ function Home({ user, showToast, onCartUpdate }) {
     const [enteredRaffles, setEnteredRaffles] = useState(new Set());
     const [busy, setBusy] = useState({});
 
-    const PRODUCT_API = process.env.REACT_APP_PRODUCT_API || 'http://localhost:3002/api/products';
-    const RAFFLE_API = process.env.REACT_APP_RAFFLE_API || 'http://localhost:3003/api/raffle';
-    const INTERACTION_API = process.env.REACT_APP_INTERACTION_API || 'http://localhost:3004/api';
+    const PRODUCT_API = process.env.REACT_APP_PRODUCT_API || '/api/products';
+    const RAFFLE_API = process.env.REACT_APP_RAFFLE_API || '/api/raffle';
+    const INTERACTION_API = process.env.REACT_APP_INTERACTION_API || '/api';
 
     useEffect(() => {
         setLoading(true);

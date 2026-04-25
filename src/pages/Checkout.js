@@ -7,9 +7,9 @@ function Checkout({ user, showToast, onCartUpdate }) {
     const [paying, setPaying] = useState(false);
     const [paid, setPaid] = useState(false);
 
-    const PRODUCT_API = process.env.REACT_APP_PRODUCT_API || 'http://localhost:3002/api/products';
-    const PAYMENT_API = process.env.REACT_APP_PAYMENT_API || 'http://localhost:3005/api/payment';
-    const INTERACTION_API = process.env.REACT_APP_INTERACTION_API || 'http://localhost:3004/api';
+    const PRODUCT_API = process.env.REACT_APP_PRODUCT_API || '/api/products';
+    const PAYMENT_API = process.env.REACT_APP_PAYMENT_API || '/api/payment';
+    const INTERACTION_API = process.env.REACT_APP_INTERACTION_API || '/api';
     const navigate = useNavigate();
 
     useEffect(() => {

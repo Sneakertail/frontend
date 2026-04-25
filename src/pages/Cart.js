@@ -6,8 +6,8 @@ function Cart({ user, showToast, onCartUpdate }) {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    const PRODUCT_API = process.env.REACT_APP_PRODUCT_API || 'http://localhost:3002/api/products';
-    const INTERACTION_API = process.env.REACT_APP_INTERACTION_API || 'http://localhost:3004/api';
+    const PRODUCT_API = process.env.REACT_APP_PRODUCT_API || '/api/products';
+    const INTERACTION_API = process.env.REACT_APP_INTERACTION_API || '/api';
 
     const loadCart = useCallback(() => {
         const cartIds = JSON.parse(localStorage.getItem('cart') || '[]');

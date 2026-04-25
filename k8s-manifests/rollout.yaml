@@ -23,8 +23,8 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: sneakertail/frontend:latest
-          imagePullPolicy: IfNotPresent
+          image: ghcr.io/sneakertail/frontend:dev
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 80

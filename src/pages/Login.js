@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 function Login({ setUser, showToast }) {
     const [tab, setTab] = useState('login'); // 'login' | 'register'
     const [loading, setLoading] = useState(false);
-    const AUTH_API = process.env.REACT_APP_AUTH_API || 'http://localhost:3001/api/auth';
+    const AUTH_API = process.env.REACT_APP_AUTH_API || '/api/auth';
     const navigate = useNavigate();
 
     // Login fields
@@ -51,8 +51,8 @@ function Login({ setUser, showToast }) {
         if (regPassword !== regConfirm) {
             showToast('Passwords do not match', 'error'); return;
         }
-        if (regPassword.length < 3) {
-            showToast('Password must be at least 3 characters', 'error'); return;
+        if (regPassword.length < 8) {
+            showToast('Password must be at least 8 characters', 'error'); return;
         }
         setLoading(true);
         fetch(`${AUTH_API}/register`, {
@@ -128,12 +128,6 @@ function Login({ setUser, showToast }) {
                         <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
                             {loading ? 'Signing in...' : 'Sign In'}
                         </button>
-
-                        <div className="auth-hint" style={{ marginTop: 20 }}>
-                            <div style={{ fontWeight: 700, marginBottom: 6 }}>Demo Credentials</div>
-                            <div>User: <code>user</code> / <code>user</code></div>
-                            <div style={{ marginTop: 4 }}>Admin: <code>admin</code> / <code>admin</code></div>
-                        </div>
                     </form>
                 )}
 
@@ -186,7 +180,7 @@ function Login({ setUser, showToast }) {
                                 <input
                                     className="form-input"
                                     type="password"
-                                    placeholder="Min 3 characters"
+                                    placeholder="Min 8 characters"
                                     value={regPassword}
                                     onChange={e => setRegPassword(e.target.value)}
                                     autoComplete="new-password"

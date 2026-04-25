@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 function Admin({ user, showToast }) {
-    const PRODUCT_API = process.env.REACT_APP_PRODUCT_API || 'http://localhost:3002/api/products';
-    const RAFFLE_API = process.env.REACT_APP_RAFFLE_API || 'http://localhost:3003/api/raffle';
+    const PRODUCT_API = process.env.REACT_APP_PRODUCT_API || '/api/products';
+    const RAFFLE_API = process.env.REACT_APP_RAFFLE_API || '/api/raffle';
 
     const [products, setProducts] = useState([]);
     const [form, setForm] = useState({ name: '', brand: '', price: '', stock: '', category: 'Lifestyle', description: '', raffleActive: false });
