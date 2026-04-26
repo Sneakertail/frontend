@@ -2,7 +2,7 @@ name: ci-dev
 
 on:
   push:
-    branches: [dev]
+    branches: [dev] 
 
 jobs:
   ci-dev:
