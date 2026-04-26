@@ -17,8 +17,8 @@ ENV REACT_APP_PAYMENT_API=${REACT_APP_PAYMENT_API}
 
 RUN npm run build
 
-FROM nginx:alpine
-COPY --from=builder /app/build /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+FROM node:18-alpine
+RUN npm install -g serve@14
+COPY --from=builder /app/build /app/build
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["serve", "-s", "/app/build", "-l", "80"]
