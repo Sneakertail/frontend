@@ -33,6 +33,30 @@ function Home({ user, showToast, onCartUpdate }) {
     const RAFFLE_API = process.env.REACT_APP_RAFFLE_API || '/api/raffle';
     const INTERACTION_API = process.env.REACT_APP_INTERACTION_API || '/api';
 
+    const readApiResponse = async (res, fallbackMessage) => {
+        const contentType = res.headers.get('content-type') || '';
+        let data = null;
+        let text = '';
+
+        if (contentType.includes('application/json')) {
+            data = await res.json();
+        } else {
+            text = await res.text();
+        }
+
+        if (!res.ok) {
+            const message =
+                data?.message ||
+                data?.error ||
+                text.trim() ||
+                fallbackMessage ||
+                `Request failed with status ${res.status}`;
+            throw new Error(message);
+        }
+
+        return data ?? (text ? { message: text } : {});
+    };
+
     const setBusyKey = (key, val) => setBusy((current) => ({ ...current, [key]: val }));
     const requireLogin = () => { showToast('Please login first', 'error'); return false; };
 
@@ -60,7 +84,7 @@ function Home({ user, showToast, onCartUpdate }) {
         Promise.all(
             raffleProducts.map((product) =>
                 fetch(`${RAFFLE_API}/status/${product.id}/${user?.userId || 'guest'}`)
-                    .then((res) => res.json())
+                    .then((res) => readApiResponse(res, 'Failed to load raffle status'))
                     .then((status) => [product.id, status])
                     .catch(() => [product.id, { entered: false, raffleOver: false, isWinner: false, winnerUserId: null, totalEntries: 0 }])
             )
@@ -131,13 +155,9 @@ function Home({ user, showToast, onCartUpdate }) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ userId: user.userId, productId: product.id })
         })
-            .then(async (res) => {
-                const data = await res.json();
-                if (!res.ok) throw new Error(data.message || 'Failed to enter raffle');
-                return data;
-            })
+            .then((res) => readApiResponse(res, 'Failed to enter raffle'))
             .then(() => fetch(`${RAFFLE_API}/status/${product.id}/${user.userId}`))
-            .then((res) => res.json())
+            .then((res) => readApiResponse(res, 'Failed to refresh raffle status'))
             .then((status) => {
                 setRaffleStatuses((prev) => ({ ...prev, [product.id]: status }));
                 showToast(`Entered ${product.name} raffle`);
